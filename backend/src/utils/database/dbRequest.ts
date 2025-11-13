@@ -15,7 +15,7 @@ export enum ExpectedReturn {
  * @interface IRecordSet
  * @description Generic record set interface
  */
-export interface IRecordSet<T = any> {
+export interface IRecordSet<T = any> extends Array<T> {
   [key: string]: any;
 }
 
@@ -64,7 +64,7 @@ export async function dbRequest(
         if (resultSetNames && resultSetNames.length > 0) {
           const namedResults: { [key: string]: any[] } = {};
           resultSetNames.forEach((name, index) => {
-            namedResults[name] = result.recordsets[index] || [];
+            namedResults[name] = (result.recordsets as any[])[index] || [];
           });
           return namedResults;
         }
